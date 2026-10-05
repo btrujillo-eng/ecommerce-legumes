@@ -4,6 +4,7 @@ from app.core import (
     INotificationService,
     IPaymentMethodFactory,
     IShoppingCart,
+    PaymentMethods,
 )
 from app.schemas import BasePaymentData, PaymentResponse
 
@@ -31,5 +32,6 @@ class ProcessPaymentUseCase:
         )
         payment_processor = self.payment_method_factory.create_payment_processor(data.payment_method.method)
         payment_response = payment_processor.process(data)
-        self.notification_service.notify_all(payment_response, data)
+        if payment_response.payment_method.method == PaymentMethods.CARD:
+            self.notification_service.notify_all(payment_response, data)
         return payment_response

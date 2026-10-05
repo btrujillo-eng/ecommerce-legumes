@@ -34,7 +34,7 @@ class EmailChannelTemplate(INotificationChannelTemplate):
                 </tr>
                 <tr>
                     <td>Valor Total</td>
-                    <td>{payment_response.transaction_amount} {payment_response.currency}</td>
+                    <td>{payment_response.transaction_amount} {payment_response.currency.value}</td>
                 </tr>
                 <tr>
                     <td>Fecha</td>
@@ -100,7 +100,7 @@ class PhoneChannelTemplate(INotificationChannelTemplate):
             Datos de tu compra:\n
             -----------------------\n
             🎫 Id de la Transacción: {payment_response.transaction_id}\n
-            💵 Valor Total: {payment_response.transaction_amount} {payment_response.currency}\n
+            💵 Valor Total: {payment_response.transaction_amount} {payment_response.currency.value}\n
             🗓️ Fecha: {payment_response.created_at}
             💳 Método de pago: Pagaste con tu {payment_response.payment_method.processing_network} terminada en {payment_response.payment_method.last_digits}
             -----------------------\n
@@ -121,7 +121,7 @@ class PhoneChannelTemplate(INotificationChannelTemplate):
             Datos de la compra:\n
             -----------------------\n
             🎫 Id de la transacción: {payment_response.transaction_id}\n
-            💵 Valor Total: {payment_response.transaction_amount} {payment_response.currency}\n
+            💵 Valor Total: {payment_response.transaction_amount} {payment_response.currency.value}\n
             🗓️ Fecha: {payment_response.created_at}\n
             💳 Motivo: Saldo insuficiente en tú {payment_response.payment_method.processing_network} terminada en {payment_response.payment_method.last_digits}\n
             -----------------------\n

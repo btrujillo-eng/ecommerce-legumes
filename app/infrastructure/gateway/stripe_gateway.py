@@ -59,7 +59,7 @@ class StripeGateway(IPaymentGateway):
             )
             logger.info(f"Payment processed successfully| Transaction id: {charge["id"]}")
             return PaymentResponse(
-                currency=charge["currency"],
+                currency=charge["currency"].upper(),
                 transaction_amount=Decimal(charge["amount"] / 100),
                 transaction_id=charge["id"],
                 payment_status=charge["status"],
@@ -71,7 +71,7 @@ class StripeGateway(IPaymentGateway):
                     last_digits=payment_data.payment_method.card_number.get_secret_value()[:4]
                 )
             )
-            
+             
         except StripeError as e:
             logger.critical(f"The transaction failed for {payment_data.user_data.first_name} | Error: {e}", stack_info=True)
             return PaymentResponse(
@@ -83,7 +83,7 @@ class StripeGateway(IPaymentGateway):
                 created_at=datetime.now(tz=UTC),
                 payment_method=CardPaymentResponse(
                     method=PaymentMethods.CARD,
-                    processing_network="error",
+                    processing_network=source,
                     last_digits=payment_data.payment_method.card_number.get_secret_value()[:4]
                 )
             )
