@@ -8,7 +8,7 @@ from app.core import (
     INotificationChannel,
     PaymentMethodFactory,
 )
-from app.infrastructure import StripeGateway
+from app.infrastructure import CashGateway, StripeGateway
 from app.notifications import (
     EmailChannel,
     EmailChannelTemplate,
@@ -17,6 +17,7 @@ from app.notifications import (
 from app.services import (
     BlackFridayDiscount,
     CardPaymentProcessor,
+    CashPaymentProcessor,
     ChristmasDiscount,
     FixedDiscount,
     NoDiscount,
@@ -26,18 +27,24 @@ from app.use_cases import ProcessPaymentUseCase
 
 _ = load_dotenv()
 
+def get_cash_gateway() -> CashGateway:
+    return CashGateway()
+
 def get_stripe_gateway() -> StripeGateway:
     api_key = os.getenv("STRIPE_API_KEY")
     if not api_key:
         raise ValueError("API key not found")
     return StripeGateway(api_key)
 
+def get_cash_processor() -> CashPaymentProcessor:
+    return CashPaymentProcessor(get_cash_gateway())
+
 def get_card_processor() -> CardPaymentProcessor:
     return CardPaymentProcessor(get_stripe_gateway())
 
 def get_payment_method_factory() -> PaymentMethodFactory:
      # TODO: implement CashPaymentProcessor
-    return PaymentMethodFactory(get_card_processor(), get_card_processor())
+    return PaymentMethodFactory(get_card_processor(), get_cash_processor())
 
 def get_shopping_cart() -> ShoppingCart:
     return ShoppingCart()
