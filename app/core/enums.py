@@ -2,14 +2,14 @@ from enum import Enum
 
 
 class DiscountStrategy(str, Enum):
-    NODISCOUNT = "no aplica"
+    NODISCOUNT = "no_aplica"
     CHRISTMAS = "navidad"
     FIXED = "fijo"
-    BLACKFRIDAY = "black friday"
+    BLACKFRIDAY = "black_friday"
 
 class PaymentMethods(str, Enum):
-    CARD = "tarjeta"
-    CASH = "efectivo"
+    CARD = "card"
+    CASH = "cash"
 
 class PaymentStatus(str, Enum):
     SUCCEDED = "succeeded"
