@@ -1,0 +1,28 @@
+from __future__ import annotations
+
+from datetime import datetime
+from decimal import Decimal
+from typing import TYPE_CHECKING
+
+from sqlalchemy import DateTime, Enum, Identity, Integer, Numeric, String
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy.sql import func
+
+from app.domain.enums import UnitOfMeasure
+from app.infrastructure.models.base import DeclarativeBase
+
+if TYPE_CHECKING:
+    from app.infrastructure.models.order_items import OrderItem
+
+class Product(DeclarativeBase):
+    __tablename__ = 'products'
+    
+    id: Mapped[int] = mapped_column(Integer, Identity(always=True), primary_key=True)
+    name: Mapped[str] = mapped_column(String(120), unique=True)
+    price: Mapped[Decimal] = mapped_column(Numeric(precision=10, scale=2))
+    unit_of_measure: Mapped[UnitOfMeasure] = mapped_column(Enum(UnitOfMeasure, name='unit_of_measure'))
+    stock: Mapped[int] = mapped_column(Integer)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.current_timestamp())
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.current_timestamp(), onupdate=func.now())
+    
+    order_items: Mapped[list[OrderItem]] = relationship(back_populates='product')
