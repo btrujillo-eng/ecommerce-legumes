@@ -1,4 +1,20 @@
-venv/
-__pycache__
-example.py
+# Environment variables and secrets
 .env
+.env.*
+!.env.example
+
+# Local files
+example.py
+
+# Test and coverage artifacts
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Type checking and linting caches
+.mypy_cache/
+.ruff_cache/
+
+# IDE settings
+.vscode/
+.idea/
