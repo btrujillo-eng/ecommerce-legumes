@@ -2,19 +2,17 @@ from __future__ import annotations
 
 from datetime import datetime
 from decimal import Decimal
-from typing import TYPE_CHECKING
 from zoneinfo import ZoneInfo
 
 from sqlalchemy import DateTime, ForeignKey, Identity, Integer, Numeric
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from app.infrastructure.models.base import DeclarativeBase
+from app.infrastructure.models.base import Base
+from app.infrastructure.models.orders import Order
+from app.infrastructure.models.products import Product
 
-if TYPE_CHECKING:
-    from app.infrastructure.models.orders import Order
-    from app.infrastructure.models.products import Product
 
-class OrderItem(DeclarativeBase):
+class OrderItem(Base):
     __tablename__ = 'order_items'
     
     id: Mapped[int] = mapped_column(Integer, Identity(always=True), primary_key=True)

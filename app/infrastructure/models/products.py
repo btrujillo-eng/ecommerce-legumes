@@ -9,12 +9,12 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
 
 from app.domain.enums import UnitOfMeasure
-from app.infrastructure.models.base import DeclarativeBase
+from app.infrastructure.models.base import Base
 
 if TYPE_CHECKING:
     from app.infrastructure.models.order_items import OrderItem
 
-class Product(DeclarativeBase):
+class Product(Base):
     __tablename__ = 'products'
     
     id: Mapped[int] = mapped_column(Integer, Identity(always=True), primary_key=True)

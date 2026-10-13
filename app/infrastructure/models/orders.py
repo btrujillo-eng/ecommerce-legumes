@@ -9,14 +9,14 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
 
 from app.domain.enums import DeliveryStatus, PaymentMethods, PaymentStatus
-from app.infrastructure.models.base import DeclarativeBase
+from app.infrastructure.models.base import Base
 from app.infrastructure.models.enum_utils import get_enum_value
 
 if TYPE_CHECKING:
     from app.infrastructure.models.order_items import OrderItem
     from app.infrastructure.models.users import User
     
-class Order(DeclarativeBase):
+class Order(Base):
     __tablename__ = 'orders'
     
     id: Mapped[int] = mapped_column(Integer, Identity(always=True), primary_key=True)
