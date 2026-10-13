@@ -25,7 +25,7 @@ class Order(Base):
     total_price: Mapped[Decimal] = mapped_column(Numeric(precision=10, scale=2))
     delivery_status: Mapped[DeliveryStatus] = mapped_column(Enum(DeliveryStatus, name='delivery_status', values_callable=get_enum_value))
     payment_method: Mapped[PaymentMethods] = mapped_column(Enum(PaymentMethods, name='payment_method', values_callable=get_enum_value))
-    payment_status: Mapped[PaymentStatus] = mapped_column(Enum(PaymentStatus), name='payment_status', values_callable=get_enum_value)
+    payment_status: Mapped[PaymentStatus] = mapped_column(Enum(PaymentStatus, name='payment_status', values_callable=get_enum_value))
     shipping_street: Mapped[str] = mapped_column(String(80))
     shipping_details: Mapped[str] = mapped_column(String(120))
     shipping_city: Mapped[str] = mapped_column(String(60))
