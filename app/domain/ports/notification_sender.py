@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from api.schemas import PaymentDataRequest, PaymentResponse
+from app.api.schemas import PaymentDataRequest, PaymentResponse
 
 
 class INotificationChannel(ABC):

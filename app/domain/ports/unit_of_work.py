@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from types import TracebackType
 from typing import Self
 
-from app.domain.ports import IUserRepository
+from app.domain.ports.user_repository import IUserRepository
 
 
 class IUnitOfWork(ABC):

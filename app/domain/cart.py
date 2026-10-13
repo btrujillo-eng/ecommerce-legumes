@@ -1,6 +1,6 @@
 from decimal import ROUND_HALF_UP, Decimal
 
-from app.domain import DiscountStrategy
+from app.domain.enums import DiscountStrategy
 from app.domain.ports import IDiscountStrategy, IShoppingCart
 from app.domain.strategies import get_discount_strategy
 

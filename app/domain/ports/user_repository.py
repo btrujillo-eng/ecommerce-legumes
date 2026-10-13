@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 from pydantic import EmailStr
 
 from app.api.schemas import UserCreateRequest, UserResponse
-from app.infrastructure.models import User
+from app.infrastructure.models.users import User
 
 
 class IUserRepository(ABC):
