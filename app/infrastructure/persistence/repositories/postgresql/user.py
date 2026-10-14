@@ -1,6 +1,5 @@
 import logging
 
-from psycopg.errors import UniqueViolation
 from pydantic import EmailStr
 from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
@@ -45,7 +44,8 @@ class UserRepository(IUserRepository):
                 user_role=user.user_role
             )
         except IntegrityError as e:
-            if isinstance(e.orig, UniqueViolation):
+            sqlstate = getattr(e.orig, "sqlstate", None) or getattr(e.orig, "pgcode", None)
+            if sqlstate == "23505":
                 raise EmailAlreadyExistsError("The email address entered already exists in the system")
             
             logger.error("Could not be insert the user: %s | Error: %s", user_data.first_name, e)
