@@ -8,13 +8,11 @@ from app.infrastructure.config import get_settings
 
 settings = get_settings()
 
-DATABASE_URL = settings.db_url.get_secret_value()
-
 # The connection to the dabatase engine is established.
 # The echo parameter tells the Engine program to log all the SQL it emits 
 # to a Python logger that it will write to standard output.
 engine = create_async_engine(
-    DATABASE_URL,
+    settings.async_database_url,
     echo=settings.debug,
     pool_pre_ping=True
 )
@@ -29,4 +27,3 @@ AsyncSessionLocal = async_sessionmaker(
     # before executing queries.
     autoflush=False
 )
-    
