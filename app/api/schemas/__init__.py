@@ -1,14 +1,18 @@
-from .payment import (
+from app.api.schemas.payment import (
     CardPaymentDataRequest,
     CardPaymentResponse,
     CashPaymentDataRequest,
     PaymentDataRequest,
     PaymentResponse,
 )
-from .user import ContactInfoRequest, UserCreateRequest, UserDataRequest, UserResponse
+
+from .user import (
+    UserCreateRequest,
+    UserDataRequest,
+    UserResponse,
+)
 
 __all__ = [
-    "ContactInfoRequest",
     "CardPaymentDataRequest",
     "CardPaymentResponse",
     "CashPaymentDataRequest",

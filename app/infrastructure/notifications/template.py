@@ -1,7 +1,8 @@
 import logging
 
 from app.api.schemas import PaymentDataRequest, PaymentResponse
-from app.domain import INotificationChannelTemplate, PaymentMethods
+from app.domain.enums import PaymentMethods
+from app.domain.ports import INotificationChannelTemplate
 from app.exceptions import NotificationTemplateError
 
 logger = logging.getLogger(__name__)

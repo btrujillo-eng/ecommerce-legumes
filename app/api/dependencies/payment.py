@@ -1,15 +1,15 @@
 from fastapi import Depends
 
 from app.application import ProcessPaymentUseCase
-from app.domain import (
+from app.domain.cart import ShoppingCart
+from app.domain.discounts import (
     BlackFridayDiscount,
     ChristmasDiscount,
-    DiscountStrategy,
     FixedDiscount,
     NoDiscount,
-    PaymentMethodFactory,
-    ShoppingCart,
 )
+from app.domain.enums import DiscountStrategy
+from app.domain.factory import PaymentMethodFactory
 from app.domain.ports import IDiscountStrategy, INotificationChannel
 from app.infrastructure.config import Settings, get_settings
 from app.infrastructure.notifications import (
