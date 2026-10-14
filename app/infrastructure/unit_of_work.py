@@ -1,7 +1,7 @@
 from types import TracebackType
 from typing import Self
 
-from sqlalchemy.orm import Session, sessionmaker
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 from app.domain.ports import IUnitOfWork
 from app.exceptions import UnitWorkIsInactiveError
@@ -9,22 +9,22 @@ from app.infrastructure.persistence.repositories.postgresql import UserRepositor
 
 
 class UnitOfWork(IUnitOfWork):
-    def __init__(self, session_factory: sessionmaker[Session]):
+    def __init__(self, session_factory: async_sessionmaker[AsyncSession]):
         self.session_factory = session_factory
-        self.session: Session | None = None
+        self.session: AsyncSession | None = None
         self._users: UserRepository | None = None
      
     @property
     def user(self) -> UserRepository | None:
         return self._users 
         
-    def __aenter__(self) -> Self:
+    async def __aenter__(self) -> Self:
         self.session = self.session_factory()
         
         self._users = UserRepository(self.session)
         return self
         
-    def __aexit__(
+    async def __aexit__(
         self, 
         exc_type: type[BaseException] | None,
         exc_value: BaseException | None, 
@@ -32,18 +32,18 @@ class UnitOfWork(IUnitOfWork):
         ) -> bool | None:
         try:
             if exc_type is not None:
-                self.rollback()
+                await self.rollback()
         finally:
             if self.session is not None:
-                self.session.close()
+                await self.session.close()
                 self.session = None
                 self._users = None
             
-    def commit(self) -> None:
+    async def commit(self) -> None:
         if self.session is None:
             raise UnitWorkIsInactiveError("Unit work is not active")
-        self.session.commit()
+        await self.session.commit()
         
-    def rollback(self) -> None:
+    async def rollback(self) -> None:
         if self.session is not None:
-           self.session.rollback()
+           await self.session.rollback()
