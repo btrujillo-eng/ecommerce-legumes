@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from app.api.v1.routers import health, payment
+from app.api.v1.routers import health, payment, user
 
 app = FastAPI(
     title="Payment Processor API",
@@ -9,3 +9,4 @@ app = FastAPI(
 
 app.include_router(payment.router)
 app.include_router(health.router)
+app.include_router(user.router)
